@@ -13,22 +13,33 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-df = pd.read_csv('C:/Users/User/OneDrive/Documents/DS4A/project/data/BD_IGAC_20210715_CLEAN.csv')
+df = pd.read_csv('data/BD_IGAC_20210715_CLEAN.csv')
 app = dash.Dash(__name__)
 
 # ------------------------------------------------------------------------------
 # Layout
 app.layout = html.Div([
 
-    html.H1("Taxonomic Classification of Soil Profiles", style={'text-align': 'center'}),
-
+    html.Div(className = 'header',
+    children = [html.H1(children = "Taxonomic Classification of Soil Profiles", 
+    className = 'title')]
+            ),
+    
+    
     html.Div(children=[
+        
         html.Div(className='column',
                  children=[
                      html.Div(className='four columns div-user-controls',
-                              children=[dcc.Graph(id='pie', figure={})]),
+                              children=[html.Br(),
+                              html.Br(),
+                              html.Br(),
+                              html.Br(),
+                              dcc.Graph(id='pie', figure={}),
+                              html.P('Profiles by Taxonomic Order', style = {'text-align': 'center'})]),
                      html.Div(className='eight columns div-for-charts bg-grey',
                               children =[
+                                  html.P('Choose a Taxonomic Order', style = {'text-align': 'left'}),
                                   dcc.Dropdown(id = 'order_boxplot',
                                                options=[
                         {'label': 'All', 'value': 'All'},
@@ -41,6 +52,7 @@ app.layout = html.Div([
                               html.Div(
                               children=[
                                   dcc.Graph(id='funnel', figure={}),
+                                  html.P('Taxonomic Order Profiles by each Horizon', style = {'text-align': 'center'}),
                                   html.Br(),        
                                   dcc.RadioItems(id = 'var_boxplot',
                                                  options=[
@@ -50,6 +62,7 @@ app.layout = html.Div([
                     dcc.Graph(id='boxplot', figure={}),    
                     html.Br(),
                     dcc.Graph(id='density_map', figure={}),
+                    html.P('Location of Samples by Taxonomic Order', style = {'text-align': 'center'}),
                     html.Br(),
                     dcc.RadioItems(id = 'var_heatmap',
                                    options=[
@@ -58,7 +71,7 @@ app.layout = html.Div([
                     ],
                     value='REGIMEN_TEMPERATURA'
                     ),  
-                    dcc.Graph(id='heatmap', figure={})
+                    dcc.Graph(id='heatmap', figure={}),
                     ],style={'columnCount': 2})])])
                                   ])
                                   ])
